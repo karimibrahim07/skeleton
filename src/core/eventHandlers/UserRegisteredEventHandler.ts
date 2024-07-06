@@ -2,15 +2,13 @@
 import { inject } from 'inversify';
 import { UserRole } from '../../dataProvider/model/User';
 import { UserRepository } from '../../dataProvider/repositories/userRepository';
-import { UserRegisteredEvent, UserLoggedInEvent, IEvent } from '../events';
+import { UserRegisteredEvent } from "../events/UserRegisteredEvent";
 import bcrypt from 'bcrypt';
 import moment from 'moment';
+import { IEventHandler } from '../shared/IEventHandler';
+import { provide } from 'inversify-binding-decorators';
 
-export interface IEventHandler<T extends IEvent> {
-
-  handle(event: T): Promise<void>;
-}
-
+@provide(UserRegisteredEventHandler)
 export class UserRegisteredEventHandler implements IEventHandler<UserRegisteredEvent> {
   constructor(@inject(UserRepository) private userRepository: UserRepository) {}
 
@@ -34,13 +32,3 @@ export class UserRegisteredEventHandler implements IEventHandler<UserRegisteredE
   }
 }
 
-export class UserLoggedInEventHandler implements IEventHandler<UserLoggedInEvent> {
-  async handle(event: UserLoggedInEvent, req?: Request): Promise<void> {
-    if (req && req.session) {
-      req.session.userId = event.userId;
-      req.session.userEmail = event.email;
-      req.session.userRole = event.role;
-      req.session.isActive = true; // Set session active on login
-    }
-  }
-}

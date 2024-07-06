@@ -7,7 +7,7 @@ import { UserRole } from "../model/User";
 @Entity("users")
 export class User {
     @PrimaryGeneratedColumn("uuid")
-    id?: string;
+    id?: string = undefined!;
 
     @Column({ unique: true, length: 30 })
     username!: string;

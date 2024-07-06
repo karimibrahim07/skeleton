@@ -1,13 +1,14 @@
 // src/services/AuthService.ts
-import { RegisterUserCommand, LoginUserCommand } from '../commands';
-import { RegisterUserCommandHandler, LoginUserCommandHandler } from '../commandHandlers';
-import { UserRegisteredEventHandler, UserLoggedInEventHandler } from '../eventHandlers';
+import { LoginUserCommand } from "../commands/LoginUserCommand";
+import { RegisterUserCommand } from "../commands/RegisterUserCommand";
+import { LoginUserCommandHandler } from '../commandHandlers/LoginUserCommandHandler';
+import { RegisterUserCommandHandler } from '../commandHandlers/RegisterUserCommandHandler';
+import { UserRegisteredEventHandler } from '../eventHandlers/UserRegisteredEventHandler';
+import { UserLoggedInEventHandler } from '../eventHandlers/UserLoggedInEventHandler';
 import { UserRepository } from '../../dataProvider/repositories/userRepository';
-import { injectable } from 'inversify';
-import { User } from '../../dataProvider/entities/User';
-import { AppDataSource } from '../../dataProvider/datasource';
+import { provide } from "inversify-binding-decorators";
 
-@injectable()
+@provide(AuthService)
 export class AuthService {
   private userRepository: UserRepository;
   private registerCommandHandler: RegisterUserCommandHandler;
@@ -29,9 +30,9 @@ export class AuthService {
     await this.userRegisteredEventHandler.handle(event);
   }
 
-  async loginUser(email: string, password: string): Promise<void> {
+  async loginUser(email: string, password: string, req: any): Promise<void> {
     const command = new LoginUserCommand(email, password);
     const event = await this.loginCommandHandler.handle(command);
-    await this.userLoggedInEventHandler.handle(event);
+    await this.userLoggedInEventHandler.handle(event, req);
   }
 }
