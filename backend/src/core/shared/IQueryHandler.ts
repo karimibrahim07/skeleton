@@ -1,4 +1,4 @@
-import { IQuery } from '../shared/IQuery';
+import { IQuery } from './IQuery';
 
 
 export interface IQueryHandler<T extends IQuery> {

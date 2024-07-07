@@ -2,7 +2,7 @@
 
 import { Repository } from 'typeorm';
 import { User } from '../entities/User';
-import { AppDataSource } from '../../dataProvider/datasource';
+import { AppDataSource } from '../datasource';
 import { provide } from 'inversify-binding-decorators';
 
 @provide(UserRepository)

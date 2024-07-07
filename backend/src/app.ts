@@ -12,6 +12,7 @@ import dotenv from 'dotenv';
 import { InversifyExpressServer } from 'inversify-express-utils';
 import container from './inversify.config';
 import { initializeDatabase } from './dataProvider/datasource';
+import passport from 'passport';
 
 // Load environment variables from .env file
 dotenv.config();
