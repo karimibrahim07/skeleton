@@ -9,7 +9,7 @@ import { UserDTO, mapUsersToDTO } from '../../dataProvider/dtos/UserDTO';
 export class GetAllUsersQueryHandler implements IQueryHandler<GetAllUsersQuery> {
     constructor(@inject(UserRepository) private userRepository: UserRepository) { }
 
-    async handle(query: GetAllUsersQuery): Promise<UserDTO[]> {
+    async handle(): Promise<UserDTO[]> {
         const users = await this.userRepository.findAll();
         return mapUsersToDTO(users)
     }

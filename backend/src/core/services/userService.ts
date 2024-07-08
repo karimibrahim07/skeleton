@@ -29,6 +29,6 @@ export class UserService {
 
   async getAllUsers() {
     const query = new GetAllUsersQuery();
-    return this.getAllUsersQueryHandler.handle(query);
+    return this.getAllUsersQueryHandler.handle();
   }
 }

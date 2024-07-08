@@ -6,10 +6,13 @@
   "scripts": {
     "start": "node dist/app.js",
     "dev": "npx ts-node-dev --respawn --transpile-only src/app.ts",
-    "build": "tsc -p .",
+    "build": "rimraf dist && tsc -p .",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint . --ext .ts",
-    "lint:fix": "eslint . --ext .ts --fix"
+    "lint:fix": "eslint . --ext .ts --fix",
+    "typeorm": "npx typeorm-ts-node-commonjs",
+    "typeorm:run": "npm run typeorm migration:run -- -d ./src/dataProvider/datasource.ts",
+    "typeorm:generate": "npm run typeorm migration:generate ./src/dataProvider/migrations/migration -- -d ./src/dataProvider/datasource.ts"
   },
   "keywords": [],
   "author": "",
@@ -34,8 +37,7 @@
     "passport-local": "^1.0.0",
     "pg": "^8.12.0",
     "redis": "^4.6.15",
-    "reflect-metadata": "^0.2.2",
-    "typeorm": "^0.3.20"
+    "reflect-metadata": "^0.2.2"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
@@ -48,6 +50,9 @@
     "@typescript-eslint/eslint-plugin": "^7.15.0",
     "@typescript-eslint/parser": "^7.15.0",
     "eslint": "^8.57.0",
+    "rimraf": "^5.0.8",
+    "ts-node": "^10.9.2",
+    "typeorm": "^0.3.20",
     "typescript": "^5.5.3"
   }
 }

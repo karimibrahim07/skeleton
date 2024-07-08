@@ -13,6 +13,7 @@ import { InversifyExpressServer } from 'inversify-express-utils';
 import container from './inversify.config';
 import { initializeDatabase } from './dataProvider/datasource';
 import passport from 'passport';
+import { extendSessionMiddleware } from './webapp/middlewares/extendSessionMiddleware';
 
 // Load environment variables from .env file
 dotenv.config();
@@ -53,6 +54,8 @@ async function startServer() {
       cookie: { secure: process.env.NODE_ENV === 'production', httpOnly: true, maxAge: 1000 * 60 * 60 },
     })
   );
+
+  app.use(extendSessionMiddleware);
 
   // Set up InversifyExpressServer
   const server = new InversifyExpressServer(container, null, { rootPath: '/api' }, app);

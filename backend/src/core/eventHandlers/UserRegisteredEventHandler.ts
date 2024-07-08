@@ -7,8 +7,9 @@ import bcrypt from 'bcrypt';
 import moment from 'moment';
 import { IEventHandler } from '../shared/IEventHandler';
 import { provide } from 'inversify-binding-decorators';
+import { TYPES, provideNamed } from '../../inversify.config';
 
-@provide(UserRegisteredEventHandler)
+@provideNamed(TYPES.IEventHandler, UserRegisteredEventHandler.name)
 export class UserRegisteredEventHandler implements IEventHandler<UserRegisteredEvent> {
   constructor(@inject(UserRepository) private userRepository: UserRepository) {}
 
